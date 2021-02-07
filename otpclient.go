@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-type OTP struct {
+type TOTP struct {
 	Code      string
 	ExpiresAt time.Time
 }
@@ -21,7 +21,7 @@ type OTP struct {
 // Six Digit, SHA1 based, 30 second intervals
 //
 // follows algo from https://tools.ietf.org/html/rfc4226
-func NewTOTP(secret string) (*OTP, error) {
+func NewTOTP(secret string) (*TOTP, error) {
 
 	hashFunc := sha1.New  // TODO support mutliple hash functions
 	intervalSeconds := 30 // TODO support multiple intervals
@@ -59,7 +59,7 @@ func NewTOTP(secret string) (*OTP, error) {
 
 	code := int32(binCode % int64(math.Pow10(codeLen)))
 
-	return &OTP{
+	return &TOTP{
 		Code:      fmt.Sprintf(fmt.Sprintf("%0%%dd", codeLen), code), // pad beginning with zeros
 		ExpiresAt: now.Truncate(time.Second * time.Duration(intervalSeconds)).Add(time.Second * time.Duration(intervalSeconds)),
 	}, nil
