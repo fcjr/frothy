@@ -10,8 +10,6 @@
 	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.leftshift.frothy</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>Frothy</string>
 	<key>CFBundlePackageType</key>
