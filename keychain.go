@@ -1,7 +1,6 @@
 package frothy
 
 import (
-	"fmt"
 	"os"
 	"sync"
 
@@ -75,9 +74,6 @@ func (ss *SecretStore) SetSecrets(secrets []*OTPSecret) error {
 			return err
 		}
 
-		fmt.Println(b)
-		fmt.Println(secret.uid)
-		fmt.Printf("ring %+v\n", ss.ring)
 		err = ss.ring.Set(keyring.Item{
 			Key:  secret.uid,
 			Data: b,

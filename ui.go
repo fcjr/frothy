@@ -20,9 +20,6 @@ func NewApp() (*App, error) {
 	if err != nil {
 		return nil, err
 	}
-	for _, secret := range secrets {
-		fmt.Println(secret.Name)
-	}
 
 	return &App{
 		secretStore: ss,
