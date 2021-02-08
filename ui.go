@@ -2,11 +2,13 @@ package frothy
 
 import (
 	"fmt"
+	"sync"
 
 	"github.com/sqweek/dialog"
 )
 
 type App struct {
+	secretLock  sync.RWMutex
 	secretStore *SecretStore
 	secrets     []*OTPSecret
 }
@@ -42,14 +44,21 @@ func (app *App) AddQR() {
 	for _, existingSecret := range app.secrets {
 		if newSecret.Secret == existingSecret.Secret {
 			go func(existingName string) {
-				dialog.Message("This secret already exists under the name %s", existingName).Error()
+				dialog.Message("This secret already exists under the name %s.", existingName).Error()
 			}(existingSecret.Name)
 			return
 		}
 	}
 
+	app.secretLock.Lock()
+	defer app.secretLock.Unlock()
 	app.secrets = append(app.secrets, newSecret)
-	app.secretStore.SetSecrets(app.secrets)
+	if err := app.secretStore.SetSecrets(app.secrets); err != nil {
+		go func(name string) {
+			dialog.Message("Failed to store 2FA Key for %s to keychain.", name).Error()
+		}(newSecret.Name)
+		return
+	}
 }
 
 func (app *App) AddCode() {
