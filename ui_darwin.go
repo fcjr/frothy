@@ -11,6 +11,11 @@ import (
 func (app *App) RunUI() {
 	runtime.LockOSThread()
 
+	// Don't quit app when all windows are closed
+	cocoa.DefaultDelegateClass.AddMethod("applicationShouldTerminateAfterLastWindowClosed:", func(notification objc.Object) bool {
+		return false
+	})
+
 	a := cocoa.NSApp_WithDidLaunch(func(n objc.Object) {
 		obj := cocoa.NSStatusBar_System().StatusItemWithLength(cocoa.NSVariableStatusItemLength)
 		obj.Retain()
