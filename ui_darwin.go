@@ -52,5 +52,6 @@ func (app *App) RunUI() {
 		obj.SetMenu(menu)
 
 	})
+	a.SetActivationPolicy(cocoa.NSApplicationActivationPolicyAccessory)
 	a.Run()
 }
