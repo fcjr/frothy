@@ -14,11 +14,12 @@ const (
 )
 
 type OTPSecret struct {
-	Name    string
-	Secret  string
-	Issuer  string
-	Type    OTPType
-	Counter string
+	uid     string  `cbor:"uid"`
+	Name    string  `cbor:"name"`
+	Secret  string  `cbor:"secret"`
+	Issuer  string  `cbor:"issuer"`
+	Type    OTPType `cbor:"type"`
+	Counter string  `cbor:"counter"`
 }
 
 func ParseOTPSecretFromURI(uri string) (*OTPSecret, error) {

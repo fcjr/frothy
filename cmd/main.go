@@ -1,8 +1,14 @@
 package main
 
-import "github.com/fcjr/frothy"
+import (
+	"github.com/fcjr/frothy"
+	"github.com/sqweek/dialog"
+)
 
 func main() {
-	app := &frothy.App{}
+	app, err := frothy.NewApp()
+	if err != nil {
+		dialog.Message(err.Error()).Error()
+	}
 	app.RunUI()
 }
