@@ -14,7 +14,7 @@ const (
 )
 
 type OTPSecret struct {
-	uid     string  `cbor:"uid"`
+	UID     string  `cbor:"uid"`
 	Name    string  `cbor:"name"`
 	Secret  string  `cbor:"secret"`
 	Issuer  string  `cbor:"issuer"`

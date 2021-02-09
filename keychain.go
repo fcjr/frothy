@@ -65,8 +65,8 @@ func (ss *SecretStore) SetSecrets(secrets []*OTPSecret) error {
 	defer ss.lock.Unlock()
 
 	for _, secret := range secrets {
-		if secret.uid == "" {
-			secret.uid = uuid.New().String()
+		if secret.UID == "" {
+			secret.UID = uuid.New().String()
 		}
 
 		b, err := cbor.Marshal(&secret)
@@ -75,7 +75,7 @@ func (ss *SecretStore) SetSecrets(secrets []*OTPSecret) error {
 		}
 
 		err = ss.ring.Set(keyring.Item{
-			Key:  secret.uid,
+			Key:  secret.UID,
 			Data: b,
 		})
 		if err != nil {

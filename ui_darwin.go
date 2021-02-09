@@ -77,10 +77,10 @@ func (app *App) RunUI() {
 				if len(secrets) > 0 {
 
 					for _, secret := range secrets {
-						secretsItem, itemExisted := secretItems[secret.uid]
+						secretsItem, itemExisted := secretItems[secret.UID]
 						if !itemExisted {
 							secretsItem = cocoa.NSMenuItem_New()
-							secretItems[secret.uid] = secretsItem
+							secretItems[secret.UID] = secretsItem
 						}
 
 						totp, err := NewTOTP(secret.Secret)
@@ -96,7 +96,7 @@ func (app *App) RunUI() {
 								secretsItem.SetTitle(title)
 							})
 						} else {
-							methodName := fmt.Sprintf("copyToCliboard_%s:", secret.uid)
+							methodName := fmt.Sprintf("copyToCliboard_%s:", secret.UID)
 							cocoa.DefaultDelegateClass.AddMethod(methodName, getClipboardFunc(secret.Secret))
 							secretsItem.SetAction(objc.Sel(methodName))
 							menu.Send("insertItem:atIndex:", secretsItem, 4)
