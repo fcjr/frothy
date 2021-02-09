@@ -13,6 +13,7 @@ require (
 	github.com/google/uuid v1.2.0
 	github.com/gopherjs/gopherjs v0.0.0-20210202160940-bed99a852dfe // indirect
 	github.com/kbinani/screenshot v0.0.0-20191211154542-3a185f1ce18f
+	github.com/lxn/walk v0.0.0-20191128110447-55ccb3a9f5c1
 	github.com/lxn/win v0.0.0-20201111105847-2a20daff6a55 // indirect
 	github.com/makiuchi-d/gozxing v0.0.0-20200903113411-25f730ed83da
 	github.com/progrium/macdriver v0.0.1

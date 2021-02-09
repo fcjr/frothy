@@ -10,5 +10,7 @@ func main() {
 	if err != nil {
 		dialog.Message(err.Error()).Error()
 	}
-	app.RunUI()
+	if err := app.RunUI(); err != nil {
+		dialog.Message(err.Error()).Error()
+	}
 }

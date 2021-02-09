@@ -11,7 +11,7 @@ import (
 	"github.com/progrium/macdriver/objc"
 )
 
-func (app *App) RunUI() {
+func (app *App) RunUI() error {
 	runtime.LockOSThread()
 
 	// Don't quit app when all windows are closed
@@ -24,7 +24,7 @@ func (app *App) RunUI() {
 		obj.Retain()
 
 		// set icon
-		data := core.NSData_WithBytes(logoBytes, uint64(len(logoBytes)))
+		data := core.NSData_WithBytes(macLogoBytes, uint64(len(macLogoBytes)))
 		image := cocoa.NSImage_InitWithData(data)
 		image.SetSize(core.Size(16.0, 16.0))
 		image.SetTemplate(true)
