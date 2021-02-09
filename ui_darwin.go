@@ -108,6 +108,7 @@ func (app *App) RunUI() error {
 	})
 	a.SetActivationPolicy(cocoa.NSApplicationActivationPolicyAccessory)
 	a.Run()
+	return nil
 }
 
 // TODO this is garbage clean upp the clipboard functionality

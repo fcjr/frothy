@@ -11,4 +11,4 @@ build_windows:
 	GOOS=windows GOARCH=amd64 go1.16rc1 build -ldflags="-H windowsgui" -o bin/frothy.exe cmd/frothy.go
 
 clean:
-	rm -rf bins
+	rm -rf bin
