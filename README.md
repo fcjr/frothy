@@ -12,7 +12,8 @@ Cross-platform TOTP client.
 
 * make
 * go >= 1.16
-* makensis
+* makensis (for building windows)
+* create-dmg (for building macos)
 
 ### Build
 #### on mac
@@ -20,7 +21,7 @@ Cross-platform TOTP client.
 1) install dependencies
 
 ```sh
-    brew install git go nsis
+    brew install go nsis create-dmg
 ```
 2) build
 
