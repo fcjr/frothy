@@ -2,8 +2,12 @@ package frothy
 
 import (
 	"bytes"
+	"fmt"
 	"image/png"
+	"log"
+	"time"
 
+	"github.com/d-tsuji/clipboard"
 	"github.com/lxn/walk"
 )
 
@@ -69,7 +73,67 @@ func (app *App) RunUI() error {
 		return err
 	}
 
+	if err := ni.ContextMenu().Actions().Add(walk.NewSeparatorAction()); err != nil {
+		return err
+	}
+
+	// Codes
+	actionCodesTitle := walk.NewAction()
+	if err := actionCodesTitle.SetText("2FA Codes"); err != nil {
+		return err
+	}
+	if err := actionCodesTitle.SetEnabled(false); err != nil {
+		return err
+	}
+	if err := ni.ContextMenu().Actions().Add(actionCodesTitle); err != nil {
+		return err
+	}
+
+	if err := ni.ContextMenu().Actions().Add(walk.NewSeparatorAction()); err != nil {
+		return err
+	}
+
+	go func() {
+		secretActions := make(map[string]*walk.Action)
+
+		for {
+			app.secretLock.RLock()
+			secrets := app.secrets
+			app.secretLock.RUnlock()
+			if len(secrets) > 0 {
+
+				for _, secret := range secrets {
+					secretAction, itemExisted := secretActions[secret.UID]
+					if !itemExisted {
+						secretAction = walk.NewAction()
+						secretActions[secret.UID] = secretAction
+					}
+
+					totp, err := NewTOTP(secret.Secret)
+					var title string
+					if err != nil {
+						title = fmt.Sprintf("%s: ERROR", secret.Name)
+					} else {
+						title = fmt.Sprintf("%s: %s (%.0fs)", secret.Name, totp.Code, time.Until(totp.ExpiresAt).Seconds())
+					}
+
+					if itemExisted {
+						secretAction.SetText(title)
+					} else {
+						secretAction.Triggered().Attach(getClipboardFunc(secret.Secret))
+						if err := ni.ContextMenu().Actions().Insert(4, secretAction); err != nil {
+							log.Println(err) // TODO handle?
+						}
+					}
+				}
+			}
+		}
+	}()
+
 	// Exit
+	if err := ni.ContextMenu().Actions().Add(walk.NewSeparatorAction()); err != nil {
+		return err
+	}
 	exitAction := walk.NewAction()
 	if err := exitAction.SetText("Exit"); err != nil {
 		return err
@@ -86,4 +150,13 @@ func (app *App) RunUI() error {
 
 	mw.Run()
 	return nil
+}
+
+func getClipboardFunc(secret string) func() {
+	return func() {
+		totp, err := NewTOTP(secret)
+		if err == nil {
+			_ = clipboard.Set(totp.Code)
+		}
+	}
 }
