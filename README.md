@@ -1,4 +1,4 @@
-*THIS APP IS UNDER ACTIVE DEVELOPMENT AND IS NOT READY FOR USAGE*
+*THIS APP IS UNDER ACTIVE DEVELOPMENT AND IS NOT READY FOR USE.*
 
 <p align="center">
 <img src="assets/images/logo.svg" alt="frothy Logo">
