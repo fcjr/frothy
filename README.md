@@ -5,3 +5,39 @@
 # frothy
 
 Cross-platform TOTP client.
+
+## Building
+
+### Prerequisites
+
+* make
+* go >= 1.16
+* makensis
+
+### Build
+#### on mac
+
+1) install dependencies
+
+```sh
+    brew install git go nsis
+```
+2) build
+
+```sh
+    make
+```
+
+#### on windows
+1) Install [Git Bash](https://git-scm.com/download/win)
+2) Install other dependencies (recommended via [scoop](https://scoop.sh/))
+
+    ```sh
+        scoop bucket add nsis https://github.com/NSIS-Dev/scoop-nsis # add bucket
+        scoop install go nsis/nsis
+    ```
+3) build (via [Git Bash](https://git-scm.com/download/win))
+
+    ```sh
+        make windows # crossbuilding for macOS is not supported
+    ```
