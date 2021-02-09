@@ -5,6 +5,7 @@ go 1.16
 require (
 	github.com/99designs/keyring v1.1.6
 	github.com/BurntSushi/xgb v0.0.0-20210121224620-deaf085860bc // indirect
+	github.com/akavel/rsrc v0.10.1
 	github.com/d-tsuji/clipboard v0.0.3
 	github.com/danieljoos/wincred v1.1.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.2.0
