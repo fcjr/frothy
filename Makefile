@@ -48,12 +48,18 @@ windows_binary:
 	@GOOS=windows GOARCH=amd64 go1.16 build -ldflags="-H windowsgui" -o bin/Frothy.exe cmd/desktop/frothy.go
 
 windows_nsis_installer: windows_binary
-	makensis \
-		/DOUTPUTFILE=../../bin/FrothyInstaller.exe \
-		/DMAJORVERSION=0 \
-		/DMINORVERSION=0 \
-		/DBUILDVERSION=1 \
-		assets/windows/frothy.nsi
+		# makensis \
+		# 	/DOUTPUTFILE=../../bin/FrothyInstaller.exe \
+		# 	/DMAJORVERSION=0 \
+		# 	/DMINORVERSION=0 \
+		# 	/DBUILDVERSION=1 \
+		# 	assets/windows/frothy.nsi
+		makensis \
+			-DOUTPUTFILE=../../bin/FrothyInstaller.exe \
+			-DMAJORVERSION=0 \
+			-DMINORVERSION=0 \
+			-DBUILDVERSION=1 \
+			assets/windows/frothy.nsi
 
 clean:
 	@rm -rf bin

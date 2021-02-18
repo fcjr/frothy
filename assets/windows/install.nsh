@@ -10,8 +10,8 @@ OutFile "${OUTPUTFILE}"
 # install frothy
 Section "Frothy" FROTHY_IDX
   SetOutPath $INSTDIR
-  file ..\..\bin\Frothy.exe
-  file ..\images\logo.ico
+  file ../../bin/Frothy.exe
+  file ../images/logo.ico
 
   # delte start menu shortcuts
   createDirectory "$SMPROGRAMS\${APPNAME}"
