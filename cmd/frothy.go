@@ -1,16 +1,16 @@
 package main
 
 import (
+	"github.com/fcjr/alert"
 	"github.com/fcjr/frothy"
-	"github.com/sqweek/dialog"
 )
 
 func main() {
 	app, err := frothy.NewApp()
 	if err != nil {
-		dialog.Message(err.Error()).Error()
+		alert.Error("Error", err.Error())
 	}
 	if err := app.RunUI(); err != nil {
-		dialog.Message(err.Error()).Error()
+		alert.Error("Error", err.Error())
 	}
 }

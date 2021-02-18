@@ -8,6 +8,7 @@ require (
 	github.com/akavel/rsrc v0.10.1
 	github.com/d-tsuji/clipboard v0.0.3
 	github.com/danieljoos/wincred v1.1.0 // indirect
+	github.com/fcjr/alert v0.0.1
 	github.com/fxamacker/cbor/v2 v2.2.0
 	github.com/gen2brain/dlgs v0.0.0-20201118155338-03fe7f81ad25
 	github.com/gen2brain/shm v0.0.0-20200228170931-49f9650110c5 // indirect
@@ -18,7 +19,6 @@ require (
 	github.com/lxn/win v0.0.0-20201111105847-2a20daff6a55 // indirect
 	github.com/makiuchi-d/gozxing v0.0.0-20200903113411-25f730ed83da
 	github.com/progrium/macdriver v0.0.1
-	github.com/sqweek/dialog v0.0.0-20200911184034-8a3d98e8211d
 	golang.org/x/text v0.3.5 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )
