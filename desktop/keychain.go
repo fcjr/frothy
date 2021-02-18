@@ -1,10 +1,11 @@
-package frothy
+package desktop
 
 import (
 	"os"
 	"sync"
 
 	"github.com/99designs/keyring"
+	"github.com/fcjr/frothy"
 	cbor "github.com/fxamacker/cbor/v2"
 	"github.com/gen2brain/dlgs"
 	"github.com/google/uuid"
@@ -36,7 +37,7 @@ func OpenSecretStore() (*SecretStore, error) {
 	}, nil
 }
 
-func (ss *SecretStore) GetSecrets() ([]*OTPSecret, error) {
+func (ss *SecretStore) GetSecrets() ([]*frothy.OTPSecret, error) {
 	ss.lock.RLock()
 	defer ss.lock.RUnlock()
 
@@ -45,13 +46,13 @@ func (ss *SecretStore) GetSecrets() ([]*OTPSecret, error) {
 		return nil, err
 	}
 
-	var secrets []*OTPSecret
+	var secrets []*frothy.OTPSecret
 	for _, key := range keys {
 		item, err := ss.ring.Get(key)
 		if err != nil {
 			return nil, err
 		}
-		var secret OTPSecret
+		var secret frothy.OTPSecret
 		if err := cbor.Unmarshal(item.Data, &secret); err != nil {
 			return nil, err
 		}
@@ -60,7 +61,7 @@ func (ss *SecretStore) GetSecrets() ([]*OTPSecret, error) {
 	return secrets, nil
 }
 
-func (ss *SecretStore) SetSecrets(secrets []*OTPSecret) error {
+func (ss *SecretStore) SetSecrets(secrets []*frothy.OTPSecret) error {
 	ss.lock.Lock()
 	defer ss.lock.Unlock()
 

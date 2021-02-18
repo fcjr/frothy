@@ -1,4 +1,4 @@
-package frothy
+package desktop
 
 import (
 	"image"

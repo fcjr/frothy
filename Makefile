@@ -13,9 +13,9 @@ install-tools: download
 darwin: darwin_binary darwin_app darwin_dmg
 
 darwin_binary:
-	@GOOS=darwin GOARCH=amd64 go1.16 build -o bin/frothy_darwin_amd64 cmd/frothy.go
+	@GOOS=darwin GOARCH=amd64 go1.16 build -o bin/frothy_darwin_amd64 cmd/desktop/frothy.go
 	# TODO look into implementing variadic in macdriver to support apple silicon
-	# GOOS=darwin GOARCH=arm64 go1.16 build -o bin/frothy_darwin_arm64 cmd/frothy.go
+	# GOOS=darwin GOARCH=arm64 go1.16 build -o bin/frothy_darwin_arm64 cmd/desktop/frothy.go
 	# lipo -create bin/frothy_darwin_amd64 bin/frothy_darwin_amd64 -output bin/frothy_darwin_universal
 
 darwin_app: darwin_binary
@@ -45,7 +45,7 @@ windows: windows_binary windows_nsis_installer
 
 windows_binary:
 	@rsrc -manifest frothy.exe.manifest -ico assets/images/logo.ico -o rsrc.syso
-	@GOOS=windows GOARCH=amd64 go1.16 build -ldflags="-H windowsgui" -o bin/Frothy.exe cmd/frothy.go
+	@GOOS=windows GOARCH=amd64 go1.16 build -ldflags="-H windowsgui" -o bin/Frothy.exe cmd/desktop/frothy.go
 
 windows_nsis_installer: windows_binary
 	makensis \

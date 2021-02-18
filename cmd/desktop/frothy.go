@@ -2,11 +2,11 @@ package main
 
 import (
 	"github.com/fcjr/alert"
-	"github.com/fcjr/frothy"
+	"github.com/fcjr/frothy/desktop"
 )
 
 func main() {
-	app, err := frothy.NewApp()
+	app, err := desktop.NewApp()
 	if err != nil {
 		alert.Error("Error", err.Error())
 	}

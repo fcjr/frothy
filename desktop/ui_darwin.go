@@ -1,4 +1,4 @@
-package frothy
+package desktop
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/d-tsuji/clipboard"
+	"github.com/fcjr/frothy"
 	"github.com/progrium/macdriver/cocoa"
 	"github.com/progrium/macdriver/core"
 	"github.com/progrium/macdriver/objc"
@@ -24,7 +25,7 @@ func (app *App) RunUI() error {
 		obj.Retain()
 
 		// set icon
-		data := core.NSData_WithBytes(macLogoBytes, uint64(len(macLogoBytes)))
+		data := core.NSData_WithBytes(frothy.MacLogoBytes, uint64(len(frothy.MacLogoBytes)))
 		image := cocoa.NSImage_InitWithData(data)
 		image.SetSize(core.Size(16.0, 16.0))
 		image.SetTemplate(true)
@@ -83,7 +84,7 @@ func (app *App) RunUI() error {
 							secretItems[secret.UID] = secretsItem
 						}
 
-						totp, err := NewTOTP(secret.Secret)
+						totp, err := frothy.NewTOTP(secret.Secret)
 						var title string
 						if err != nil {
 							title = fmt.Sprintf("%s: ERROR", secret.Name)
@@ -114,7 +115,7 @@ func (app *App) RunUI() error {
 // TODO this is garbage clean upp the clipboard functionality
 func getClipboardFunc(secret string) func(_ objc.Object) {
 	return func(_ objc.Object) {
-		totp, err := NewTOTP(secret)
+		totp, err := frothy.NewTOTP(secret)
 		if err == nil {
 			_ = clipboard.Set(totp.Code)
 		}

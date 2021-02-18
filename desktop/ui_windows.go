@@ -1,4 +1,4 @@
-package frothy
+package desktop
 
 import (
 	"bytes"
@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/d-tsuji/clipboard"
+	"github.com/fcjr/frothy"
 	"github.com/lxn/walk"
 )
 
@@ -19,7 +20,7 @@ func (app *App) RunUI() error {
 		return err
 	}
 
-	img, err := png.Decode(bytes.NewReader(windowsLogoBytes))
+	img, err := png.Decode(bytes.NewReader(frothy.WindowsLogoBytes))
 	if err != nil {
 		return err
 	}
@@ -109,7 +110,7 @@ func (app *App) RunUI() error {
 						secretActions[secret.UID] = secretAction
 					}
 
-					totp, err := NewTOTP(secret.Secret)
+					totp, err := frothy.NewTOTP(secret.Secret)
 					var title string
 					if err != nil {
 						title = fmt.Sprintf("%s: ERROR", secret.Name)
@@ -154,7 +155,7 @@ func (app *App) RunUI() error {
 
 func getClipboardFunc(secret string) func() {
 	return func() {
-		totp, err := NewTOTP(secret)
+		totp, err := frothy.NewTOTP(secret)
 		if err == nil {
 			_ = clipboard.Set(totp.Code)
 		}

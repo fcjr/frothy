@@ -1,16 +1,18 @@
-package frothy
+package desktop
 
 import (
 	"fmt"
 	"sync"
 
 	"github.com/fcjr/alert"
+	"github.com/fcjr/frothy"
+	"github.com/martinlindhe/inputbox"
 )
 
 type App struct {
 	secretLock  sync.RWMutex
 	secretStore *SecretStore
-	secrets     []*OTPSecret
+	secrets     []*frothy.OTPSecret
 }
 
 func NewApp() (*App, error) {
@@ -36,13 +38,29 @@ func (app *App) AddQR() {
 		return
 	}
 
-	newSecret, err := ParseOTPSecretFromURI(qrData)
+	secret, err := frothy.ParseOTPSecretFromURI(qrData)
 	if err != nil {
 		go alert.Error("Error", "Found QR code on screen but was not a valid 2FA code.")
 		return
 	}
+
+	app.addSecret(secret)
+}
+
+func (app *App) AddCode() {
+	code, ok := inputbox.InputBox("Add TOTP via Code", "Enter Code given by the website", "")
+	if ok {
+		if code == "" {
+			go app.AddCode()
+			return
+		}
+		fmt.Println(code)
+	}
+}
+
+func (app *App) addSecret(secret *frothy.OTPSecret) {
 	for _, existingSecret := range app.secrets {
-		if newSecret.Secret == existingSecret.Secret {
+		if secret.Secret == existingSecret.Secret {
 			go func(existingName string) {
 				go alert.Error("Error", fmt.Sprint("This secret already exists under the name %s.", existingName))
 			}(existingSecret.Name)
@@ -52,15 +70,11 @@ func (app *App) AddQR() {
 
 	app.secretLock.Lock()
 	defer app.secretLock.Unlock()
-	app.secrets = append(app.secrets, newSecret)
+	app.secrets = append(app.secrets, secret)
 	if err := app.secretStore.SetSecrets(app.secrets); err != nil {
 		go func(name string) {
 			alert.Error("Error", fmt.Sprint("Failed to store 2FA Key for %s to keychain.", name))
-		}(newSecret.Name)
+		}(secret.Name)
 		return
 	}
-}
-
-func (app *App) AddCode() {
-	fmt.Println("AddCode")
 }
