@@ -60,7 +60,7 @@ func NewTOTP(secret string) (*TOTP, error) {
 	code := int32(binCode % int64(math.Pow10(codeLen)))
 
 	return &TOTP{
-		Code:      fmt.Sprintf(fmt.Sprintf("%0%%dd", codeLen), code), // pad beginning with zeros
+		Code:      fmt.Sprintf(fmt.Sprintf("%%0%dd", codeLen), code), // pad beginning with zeros
 		ExpiresAt: now.Truncate(time.Second * time.Duration(intervalSeconds)).Add(time.Second * time.Duration(intervalSeconds)),
 	}, nil
 }
