@@ -11,17 +11,17 @@ export const genTOTP = (secret: string): TOTP => {
 	const intervalSeconds = 30 // TODO support multiple intervals
 	const codeLen = 6          // TODO support multiple code lengths
 
-	const counter = Math.floor(Date.now() / 1000 / intervalSeconds)
-    const time = counter.toString(16).toUpperCase().padStart(16, '0')
+	const startTime = Math.floor(Date.now() / 1000 / intervalSeconds)
+	const counter = startTime.toString(16).toUpperCase().padStart(16, '0')
 
-    const hmac = new jsSHA(
-        hashFunc,
-        'HEX',
-        { hmacKey: { value: base32.decode(secret, true), format: 'BYTES' } },
-    )
-	hmac.update(time)
+	const hmac = new jsSHA(
+		hashFunc,
+		'HEX',
+		{ hmacKey: { value: base32.decode(secret, true), format: 'BYTES' } },
+	)
+	hmac.update(counter)
 	const sum = hmac.getHash('UINT8ARRAY')
-    
+
 	const offset = sum[19] & 0xf
 	const binCode = ((sum[offset] & 0x7f) << 24 |
 		((sum[offset+1] & 0xff) << 16) |
@@ -33,6 +33,6 @@ export const genTOTP = (secret: string): TOTP => {
 
 	return {
 		code: paddedCode,
-		expiresAt: new Date((counter+1) * 1000 * intervalSeconds)
+		expiresAt: new Date((startTime+1) * 1000 * intervalSeconds)
 	}
 }
