@@ -19,77 +19,77 @@ function getHeaderTitle(route: Partial<Route<string, object | undefined>>) {
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Codes'
 
   switch (routeName) {
-    case 'Codes':
-      return 'Frothy'
-    case 'QR':
-      return 'Scan a 2FA QR'
+	case 'Codes':
+		return 'Frothy'
+	case 'QR':
+		return 'Scan a 2FA QR'
   }
 }
 
 type MainScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    'Main'
+	RootStackParamList,
+	'Main'
 >
 
 type MainScreenProps = {
-    navigation: MainScreenNavigationProp,
-    route: any
+	navigation: MainScreenNavigationProp,
+	route: any
 }
 
 export type MainTabsParamList = {
-    Codes: {}
-    QR: {}
+	Codes: {}
+	QR: {}
 }
 
 const Tabs = createBottomTabNavigator<MainTabsParamList>()
 
 export default function MainScreen({ navigation, route }: MainScreenProps) {
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            title: getHeaderTitle(route)
-        })
-    }, [navigation, route])
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			title: getHeaderTitle(route)
+		})
+	}, [navigation, route])
 
-    return (
-        <Tabs.Navigator
-            tabBar={(props) => {
-                return (
-                    <FrothyGradient>
-                        <BottomTabBar
-                            {...props}
-                            style={{ backgroundColor: 'transparent' }}
-                        />
-                    </FrothyGradient>
-                )
-            }}
-            tabBarOptions={{
-                activeTintColor: 'white',
-                inactiveTintColor: '#D9D9D9'
-            }}
-        >
-            <Tabs.Screen 
-                name='Codes'
-                component={CodesScreen}
-                options={{
-                    tabBarIcon: ({ color }) => (
-                        <Icon name='vpn-key' size={20} color={color} />
-                      )
-                }}
-            />
-            <Tabs.Screen
-                name='QR'
-                component={QRScreen}
-                options={{
-                    tabBarIcon: ({ color }) => (
-                        <Icon name='qr-code-scanner' size={20} color={color} />
-                      )
-                }}
-            />
-        </Tabs.Navigator>
-    )
+	return (
+		<Tabs.Navigator
+			tabBar={(props) => {
+				return (
+					<FrothyGradient>
+						<BottomTabBar
+							{...props}
+							style={{ backgroundColor: 'transparent' }}
+						/>
+					</FrothyGradient>
+				)
+			}}
+			tabBarOptions={{
+				activeTintColor: 'white',
+				inactiveTintColor: '#D9D9D9'
+			}}
+		>
+			<Tabs.Screen
+				name='Codes'
+				component={CodesScreen}
+				options={{
+					tabBarIcon: ({ color }) => (
+						<Icon name='vpn-key' size={20} color={color} />
+					  )
+				}}
+			/>
+			<Tabs.Screen
+				name='QR'
+				component={QRScreen}
+				options={{
+					tabBarIcon: ({ color }) => (
+						<Icon name='qr-code-scanner' size={20} color={color} />
+					  )
+				}}
+			/>
+		</Tabs.Navigator>
+	)
 }
 
 const styles = StyleSheet.create({
-    container: {},
+	container: {},
 })

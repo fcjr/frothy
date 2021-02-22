@@ -7,35 +7,36 @@ import { createStackNavigator, StackNavigationOptions, Header, StackHeaderProps 
 import FrothyGradient from './components/FrothyGradient'
 
 const GradientHeader = (props: StackHeaderProps) => (
-  <View style={{ backgroundColor: '#eee' }}>
-      <FrothyGradient>
-        <Header {...props} />
-      </FrothyGradient>
-    </View>
-  )
+	<View style={{ backgroundColor: '#eee' }}>
+			<FrothyGradient>
+				<Header {...props} />
+			</FrothyGradient>
+		</View>
+	)
+
 
 const globalScreenOptions: StackNavigationOptions = {
-  header: props => <GradientHeader {...props} />,
-  headerStyle: {
-    backgroundColor: 'transparent',
-  },
-  headerTitleStyle: { color: 'white' },
-  headerTintColor: 'white'
+	header: props => <GradientHeader {...props} />,
+	headerStyle: {
+		backgroundColor: 'transparent',
+	},
+	headerTitleStyle: { color: 'white' },
+	headerTintColor: 'white'
 }
 
 export type RootStackParamList = {
-  Main: {}
+	Main: {}
 }
 
 const Stack = createStackNavigator<RootStackParamList>()
 
 export default function App() {
-  return (
-      <NavigationContainer>
-        <StatusBar style='auto' />
-        <Stack.Navigator screenOptions={globalScreenOptions}>
-          <Stack.Screen name='Main' component={MainScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-  )
+	return (
+			<NavigationContainer>
+				<StatusBar style='auto' />
+				<Stack.Navigator screenOptions={globalScreenOptions}>
+					<Stack.Screen name='Main' component={MainScreen} />
+				</Stack.Navigator>
+			</NavigationContainer>
+	)
 }
